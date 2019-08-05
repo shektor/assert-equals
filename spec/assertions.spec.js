@@ -12,6 +12,17 @@ function runAllSpecs() {
     specResults.push(specMessage + fail)
   }
 
+  specMessage = 'Spec 02 - unequal primitive type number: '
+  try {
+    assertEquals(specMessage, 1, 2)
+  } catch (error) {
+    if (error.message === specMessage + ' Expected "1" found "2"') {
+      specResults.push(specMessage + pass)
+    } else {
+      specResults.push(specMessage + fail)
+    }
+  }
+
   var specMessageEl = document.getElementById('specMessages');
   var newSpecEl;
 

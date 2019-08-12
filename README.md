@@ -1,6 +1,6 @@
 # Assert Equals
 
-Create an "assertEquals" function such that it will correctly compare the passed "expected" vs "actual" parameters.
+A javascript "assertEquals" function that compares passed 'expected' and 'actual' arguments and asserts if they are equal.
 
 ## Getting Started
 
@@ -8,17 +8,51 @@ Create an "assertEquals" function such that it will correctly compare the passed
 > git clone git@github.com:shektor/assert-equals.git
 > cd assert-equals
 > open index.html
+# assertEquals function is now available for use within Developer Tools Console
 ```
 
-### Expected Result
+## Usage
 
-The following tests should "fail": 02, 03, 04, 07, 08 and 09 - and the failures should be reported using the provided mechanism.
-The following output is expected for the list of tests provided:
+### `assertEqual(message, expected, actual)`
+`./src/assertions.js`
+
+Required
+- `message` to identify assertion being made.
+- `expected` value of data
+- `actual` value of data
+
+Returns
+- `true` if expected and actual arguments are equal.
+
+Exception
+- `failure` object with a `message` property if expected and actual arguments are not equal.
+
+Example
+```javascript
+> try {
+    assertEquals("Passing Test:", 1, 1)
+  } catch(failure) {
+    console.log(failure.message)
+  }
+< true
+
+> try {
+    assertEquals("Failing Test:", 1, 2)
+  } catch(failure) {
+    console.log(failure.message)
+  }
+  Failing Test: Expected "1" but found "2"
 ```
-Test 02: Expected "abcdef" found "abc"
-Test 03: Expected type Array but found Object
-Test 04: Expected array length 2 but found 3
-Test 07: Expected propB.propA[1].propB "b" but found "c"
-Test 08: Expected propB.propC but was not found
-Test 09: Expected type null but found Object
-```
+
+### Test Runner
+
+The `index` displays the current specifications for the function, along with 'Expected Result' and 'Output' from tests on the function.
+
+To add further `assertEquals` tests append `runtest()` function calls to the end of the existing block of tests within `src/testrunner.js`. Please note the 'Output' will only show assertions that **fail**.
+
+`runTest(testMessage, failureMessageArray, expected, actual)`
+
+- `testMessage` A message to identify the test and output.
+- `failureMessageArray` An array that stores exceptions thrown by `assertEqual` when any assertions are not equal.
+- `expected` The expected result of the assertion.
+- `actual` The actual result of the assertion.

@@ -10,6 +10,11 @@ function assertEquals (message, expected, actual) {
     if (expected.length !== actual.length) {
       throw { message: message + 'Expected Array length ' + expected.length + ' but found ' + actual.length }
     }
+    for (var i = 0; i < expected.length; i++) {
+      if (expected[i] !== actual[i]) {
+        throw { message: message + 'Expected [' + i + '] "' + expected[i] + '" but found "' + actual[i] + '"'}
+      }
+    }
   } else {
     if (expected !== actual) {
       throw { message: message + ' Expected "' + expected + '" found "' + actual + '"' }

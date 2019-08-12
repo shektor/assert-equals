@@ -34,6 +34,19 @@ function runAllSpecs() {
     failMessage
   );
 
+  specMessage = "Array elements equal";
+  assertEqualsShouldPassWith(specMessage, specResults, [2, 7, 8], [2, 7, 8]);
+
+  specMessage = "Array elements not equal";
+  failMessage = 'Expected [2] "8" but found "3"';
+  assertEqualsShouldFailWith(
+    specMessage,
+    specResults,
+    [2, 7, 8],
+    [2, 7, 3],
+    failMessage
+  );
+
   var specMessageEl = document.getElementById("specMessages");
   var newSpecEl;
 

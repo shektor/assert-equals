@@ -49,6 +49,7 @@ function runAll() {
   runTest("Test 07: ", assertionFailures, complexObject1, complexObject2);
   runTest("Test 08: ", assertionFailures, complexObject1, complexObject3);
   runTest("Test 09: ", assertionFailures, null, {});
+  runTest("Test 10: ", assertionFailures, [1, 2, 3], [1, 3, 2]);
 
   var messagesEl = document.getElementById("messages");
   var newListEl;

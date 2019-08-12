@@ -10,31 +10,15 @@ function runAllSpecs() {
   assertEqualsShouldPassWith(specMessage, specResults, 1, 1)
 
   specMessage = 'Spec 02 - unequal primitive type number: '
-  try {
-    assertEquals(specMessage, 1, 2)
-    specResults.push(specMessage + fail)
-  } catch (error) {
-    if (error.message === specMessage + ' Expected "1" found "2"') {
-      specResults.push(specMessage + pass)
-    } else {
-      specResults.push(specMessage + fail)
-    }
-  }
+  failMessage = ' Expected "1" found "2"'
+  assertEqualsShouldFailWith(specMessage, specResults, 1, 2, failMessage)
 
   specMessage = 'Spec 03 - array type equal: '
   assertEqualsShouldPassWith(specMessage, specResults, [1, 1], [1, 1])
 
   specMessage = 'Spec 04 - array type unequal: '
-  try {
-    assertEquals(specMessage, [], {})
-    specResults.push(specMessage + fail)
-  } catch (error) {
-    if (error.message === specMessage + ' Expected type Array but found Object') {
-      specResults.push(specMessage + pass)
-    } else {
-      specResults.push(specMessage + fail)
-    }
-  }
+  failMessage = ' Expected type Array but found Object'
+  assertEqualsShouldFailWith(specMessage, specResults, [1, 2], { 1: 2 }, failMessage)
 
   var specMessageEl = document.getElementById('specMessages');
   var newSpecEl;

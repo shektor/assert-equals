@@ -16,11 +16,13 @@ function assertEquals (message, expected, actual) {
       }
     }
   } else {
-    if (expected !== actual) {
-      throw { message: message + ' Expected "' + expected + '" found "' + actual + '"' }
+    try {
+      assertPrimitiveEquality(message, expected, actual)
+    } catch (failure) {
+      throw failure
     }
   }
-
+  
   return true
 }
 
@@ -28,4 +30,12 @@ function toStringCallTypeOf(operand) {
   var type = Object.prototype.toString.call(operand)
   type = type.slice(8,-1)
   return type
+}
+
+function assertPrimitiveEquality(message, expected, actual) {
+  if (expected === actual) {
+    return true;
+  } else {
+    throw { message: message + ' Expected "' + expected + '" found "' + actual + '"' }
+  }
 }

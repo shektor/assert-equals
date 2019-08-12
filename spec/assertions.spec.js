@@ -8,7 +8,7 @@ function runAllSpecs() {
   assertEqualsShouldPassWith(specMessage, specResults, 1, 1);
 
   specMessage = "Number not equal: ";
-  failMessage = ' Expected "1" found "2"';
+  failMessage = ' Expected "1" but found "2"';
   assertEqualsShouldFailWith(specMessage, specResults, 1, 2, failMessage);
 
   specMessage = "Array type and length equal: ";

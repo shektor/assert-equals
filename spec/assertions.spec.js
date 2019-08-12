@@ -7,11 +7,7 @@ function runAllSpecs() {
   var fail = ' FAIL'
 
   specMessage = 'Spec 01 - equal primitive type number: '
-  if (assertEquals(specMessage, 1, 1)) {
-    specResults.push(specMessage + pass)
-  } else {
-    specResults.push(specMessage + fail)
-  }
+  assertEqualsShouldPassWith(specMessage, specResults, 1, 1)
 
   specMessage = 'Spec 02 - unequal primitive type number: '
   try {
@@ -26,11 +22,7 @@ function runAllSpecs() {
   }
 
   specMessage = 'Spec 03 - array type equal: '
-  if (assertEquals(specMessage, [1, 1], [1, 1])) {
-    specResults.push(specMessage + pass)
-  } else {
-    specResults.push(specMessage + fail)
-  }
+  assertEqualsShouldPassWith(specMessage, specResults, [1, 1], [1, 1])
 
   specMessage = 'Spec 04 - array type unequal: '
   try {

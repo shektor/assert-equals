@@ -7,12 +7,15 @@ function assertEquals (message, expected, actual) {
     if (expectedType !== actualType) {
       throw { message: message + ' Expected type ' + expectedType + ' but found ' + actualType }
     }
+    if (expected.length !== actual.length) {
+      throw { message: message + 'Expected Array length ' + expected.length + ' but found ' + actual.length }
+    }
   } else {
     if (expected !== actual) {
       throw { message: message + ' Expected "' + expected + '" found "' + actual + '"' }
     }
   }
-  
+
   return true
 }
 

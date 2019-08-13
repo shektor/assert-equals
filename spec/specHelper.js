@@ -6,15 +6,15 @@ const assertEqualsShouldPassWith = (
 ) => {
   try {
     if (assertEquals(specMessage, expected, actual)) {
-      resultArray.push(`${specMessage} PASS`);
+      resultArray.push(`PASS - ${specMessage}`);
     } else {
-      resultArray.push(`${specMessage} FAIL`);
+      resultArray.push(`FAIL - ${specMessage}`);
       resultArray.push(
         `Expected "${expected}" and Actual "${actual}" did not return true`
       );
     }
   } catch (failure) {
-    resultArray.push(`${specMessage} FAIL`);
+    resultArray.push(`FAIL - ${specMessage}`);
     resultArray.push(
       `Expected "${expected}" and Actual "${actual}" threw exception <${JSON.stringify(
         failure
@@ -32,7 +32,7 @@ const assertEqualsShouldFailWith = (
 ) => {
   try {
     assertEquals(specMessage, expected, actual);
-    resultArray.push(`${specMessage} FAIL`);
+    resultArray.push(`FAIL - ${specMessage}`);
     resultArray.push(
       `Expected "${expected}" and Actual "${actual}" did not throw exception`
     );
@@ -40,9 +40,9 @@ const assertEqualsShouldFailWith = (
     expectedFailure = `${specMessage} ${failMessage}`;
 
     if (failure.message === expectedFailure) {
-      resultArray.push(`${specMessage} PASS`);
+      resultArray.push(`PASS - ${specMessage}`);
     } else {
-      resultArray.push(`${specMessage} FAIL`);
+      resultArray.push(`FAIL - ${specMessage}`);
       resultArray.push(
         `Expected exception <${expectedFailure}> but got <${failure.message}>`
       );

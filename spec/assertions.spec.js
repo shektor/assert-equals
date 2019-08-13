@@ -23,7 +23,7 @@ const runAllSpecs = () => {
   );
 
   specMessage = "Array length not equal";
-  failMessage = "Expected Array length 4 but found 5";
+  failMessage = "Expected elements 4 but found 5";
   assertEqualsShouldFailWith(
     specMessage,
     specResults,
@@ -63,7 +63,7 @@ const runAllSpecs = () => {
     failMessage
   );
 
-  specMessage = "Object key exists: ";
+  specMessage = "Object key exists";
   assertEqualsShouldPassWith(
     specMessage,
     specResults,
@@ -71,13 +71,23 @@ const runAllSpecs = () => {
     { a: 1, b: 2 }
   );
 
-  specMessage = "Object key does not exist: ";
+  specMessage = "Object key does not exist";
   failMessage = 'Expected object key "b" but was not found';
   assertEqualsShouldFailWith(
     specMessage,
     specResults,
     { a: 1, b: 2 },
     { a: 1, c: 2 },
+    failMessage
+  );
+
+  specMessage = "Object key does not exist in Expected";
+  failMessage = "Expected elements 2 but found 3";
+  assertEqualsShouldFailWith(
+    specMessage,
+    specResults,
+    { a: 1, b: 2 },
+    { a: 1, c: 2, d: 5 },
     failMessage
   );
 

@@ -4,18 +4,18 @@ function runAllSpecs() {
   var pass = " PASS";
   var fail = " FAIL";
 
-  specMessage = "Number equal: ";
+  specMessage = "Number equal";
   assertEqualsShouldPassWith(specMessage, specResults, 1, 1);
 
-  specMessage = "Number not equal: ";
-  failMessage = ' Expected "1" but found "2"';
+  specMessage = "Number not equal";
+  failMessage = 'Expected "1" but found "2"';
   assertEqualsShouldFailWith(specMessage, specResults, 1, 2, failMessage);
 
-  specMessage = "Array type and length equal: ";
+  specMessage = "Array type and length equal";
   assertEqualsShouldPassWith(specMessage, specResults, [1, 1], [1, 1]);
 
-  specMessage = "Array type unequal: ";
-  failMessage = " Expected type Array but found Object";
+  specMessage = "Array type unequal";
+  failMessage = "Expected type Array but found Object";
   assertEqualsShouldFailWith(
     specMessage,
     specResults,
@@ -44,6 +44,24 @@ function runAllSpecs() {
     specResults,
     [2, 7, 8],
     [2, 7, 3],
+    failMessage
+  );
+
+  specMessage = "2d Array equal";
+  assertEqualsShouldPassWith(
+    specMessage,
+    specResults,
+    [[1, 2], [3, 5]],
+    [[1, 2], [3, 5]]
+  );
+
+  specMessage = "2d Array not equal";
+  failMessage = 'Expected [1][1] "5" but found "4"';
+  assertEqualsShouldFailWith(
+    specMessage,
+    specResults,
+    [[1, 2], [3, 5]],
+    [[1, 2], [3, 4]],
     failMessage
   );
 

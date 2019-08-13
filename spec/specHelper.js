@@ -26,7 +26,7 @@ function assertEqualsShouldFailWith(
     assertEquals(specMessage, expected, actual);
     resultArray.push(specMessage + " FAIL");
   } catch (failure) {
-    if (failure.message === specMessage + failMessage) {
+    if (failure.message === specMessage + " " + failMessage) {
       resultArray.push(specMessage + " PASS");
     } else {
       resultArray.push(specMessage + " FAIL");

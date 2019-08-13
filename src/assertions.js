@@ -1,4 +1,15 @@
 function assertEquals(message, expected, actual) {
+  try {
+    var stack = [];
+    assertDeepEquality(message, expected, actual, stack);
+  } catch (failure) {
+    throw failure;
+  }
+
+  return true;
+}
+
+function assertDeepEquality(message, expected, actual, stack) {
   var expectedType = toStringCallTypeOf(expected);
   var actualType = toStringCallTypeOf(actual);
 
@@ -7,9 +18,9 @@ function assertEquals(message, expected, actual) {
 
     if (expectedType === "Array") {
       assertArrayLength(message, expected, actual);
-      assertArrayEquality(message, expected, actual);
+      assertArrayEquality(message, expected, actual, stack);
     } else {
-      assertPrimitiveEquality(message, expected, actual);
+      assertPrimitiveEquality(message, expected, actual, stack);
     }
   } catch (failure) {
     throw failure;
@@ -35,13 +46,20 @@ function assertTypeEquality(message, expectedType, actualType) {
   }
 }
 
-function assertPrimitiveEquality(message, expected, actual) {
+function assertPrimitiveEquality(message, expected, actual, stack) {
   if (expected === actual) {
     return true;
   } else {
     throw {
       message:
-        message + ' Expected "' + expected + '" but found "' + actual + '"'
+        message +
+        " Expected " +
+        stackDisplay(stack) +
+        '"' +
+        expected +
+        '" but found "' +
+        actual +
+        '"'
     };
   }
 }
@@ -53,7 +71,7 @@ function assertArrayLength(message, expected, actual) {
     throw {
       message:
         message +
-        "Expected Array length " +
+        " Expected Array length " +
         expected.length +
         " but found " +
         actual.length
@@ -61,21 +79,22 @@ function assertArrayLength(message, expected, actual) {
   }
 }
 
-function assertArrayEquality(message, expected, actual) {
+function assertArrayEquality(message, expected, actual, stack) {
   for (var i = 0; i < expected.length; i++) {
-    if (expected[i] !== actual[i]) {
-      throw {
-        message:
-          message +
-          "Expected [" +
-          i +
-          '] "' +
-          expected[i] +
-          '" but found "' +
-          actual[i] +
-          '"'
-      };
+    stack.push("[" + i + "]");
+    if (assertDeepEquality(message, expected[i], actual[i], stack)) {
+      stack.pop();
     }
   }
   return true;
+}
+
+function stackDisplay(arrayStack) {
+  if (arrayStack.length > 0) {
+    arrayStack = arrayStack.join("") + " ";
+
+    return arrayStack;
+  } else {
+    return "";
+  }
 }

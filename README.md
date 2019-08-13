@@ -1,6 +1,6 @@
 # Assert Equals
 
-A javascript "assertEquals" function that compares passed 'expected' and 'actual' arguments and asserts if they are equal.
+A javascript `assertEquals` function that compares passed 'expected' and 'actual' arguments and asserts if they are equal.
 
 ## Getting Started
 
@@ -43,16 +43,3 @@ Example
   }
   Failing Test: Expected "1" but found "2"
 ```
-
-### Test Runner
-
-The `index` displays the current specifications for the function, along with 'Expected Result' and 'Output' from tests on the function.
-
-To add further `assertEquals` tests append `runtest()` function calls to the end of the existing block of tests within `src/testrunner.js`. Please note the 'Output' will only show assertions that **fail**.
-
-`runTest(testMessage, failureMessageArray, expected, actual)`
-
-- `testMessage` A message to identify the test and output.
-- `failureMessageArray` An array that stores exceptions thrown by `assertEqual` when any assertions are not equal.
-- `expected` The expected result of the assertion.
-- `actual` The actual result of the assertion.

@@ -1,8 +1,6 @@
-function runAllSpecs() {
-  var specMessage;
-  var specResults = [];
-  var pass = " PASS";
-  var fail = " FAIL";
+const runAllSpecs = () => {
+  let specMessage, failMessage;
+  const specResults = [];
 
   specMessage = "Number equal";
   assertEqualsShouldPassWith(specMessage, specResults, 1, 1);
@@ -65,14 +63,13 @@ function runAllSpecs() {
     failMessage
   );
 
-  var specMessageEl = document.getElementById("specMessages");
-  var newSpecEl;
+  const specMessageEl = document.getElementById("specMessages");
 
-  for (var i = 0; i < specResults.length; i++) {
-    newSpecEl = document.createElement("li");
-    newSpecEl.innerHTML = specResults[i];
+  specResults.forEach(result => {
+    const newSpecEl = document.createElement("li");
+    newSpecEl.innerHTML = result;
     specMessageEl.appendChild(newSpecEl);
-  }
-}
+  });
+};
 
 runAllSpecs();

@@ -14,7 +14,13 @@ const runAllSpecs = () => {
 
   specMessage = "String not equal";
   failMessage = 'Expected "bob" but found "sue"';
-  assertEqualsShouldFailWith(specMessage, specResults, 'bob', 'sue', failMessage);
+  assertEqualsShouldFailWith(
+    specMessage,
+    specResults,
+    "bob",
+    "sue",
+    failMessage
+  );
 
   specMessage = "Array type and length equal";
   assertEqualsShouldPassWith(specMessage, specResults, [1, 1], [1, 1]);
@@ -79,7 +85,7 @@ const runAllSpecs = () => {
   );
 
   specMessage = "Object key does not exist";
-  failMessage = 'At b Expected object key in Actual but was not found';
+  failMessage = "At b Expected object key in Actual but was not found";
   assertEqualsShouldFailWith(
     specMessage,
     specResults,
@@ -147,6 +153,25 @@ const runAllSpecs = () => {
   specMessage = "Boolean not equal to commen number coercion";
   failMessage = "Expected type Boolean but found Number";
   assertEqualsShouldFailWith(specMessage, specResults, false, 0, failMessage);
+
+  specMessage = "Dates with identical attributes are equal";
+  assertEqualsShouldPassWith(
+    specMessage,
+    specResults,
+    new Date(2019, 8, 5),
+    new Date(2019, 8, 5)
+  );
+
+  specMessage = "Dates with different attributes are not equal";
+  failMessage =
+    'Expected "Thu Sep 05 2019 00:00:00 GMT+0100 (British Summer Time)" but found "Sun Sep 15 2019 00:00:00 GMT+0100 (British Summer Time)"';
+  assertEqualsShouldFailWith(
+    specMessage,
+    specResults,
+    new Date(2019, 8, 5),
+    new Date(2019, 8, 15),
+    failMessage
+  );
 
   const specMessageEl = document.getElementById("specMessages");
 

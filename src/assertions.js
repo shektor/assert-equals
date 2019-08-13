@@ -32,6 +32,9 @@ const assertDeepEquality = (expected, actual, tracker) => {
         assertArrayLength(expectedArray, actualArray, tracker);
         assertObjectEquality(expectedArray, actual, tracker);
         break;
+      case "Date":
+        assertDateEquality(expected, actual, tracker);
+        break;
       default:
         assertPrimitiveEquality(expected, actual, tracker);
     }
@@ -100,6 +103,18 @@ const assertObjectEquality = (expectedArray, actualObject, tracker) => {
   });
 
   return true;
+};
+
+const assertDateEquality = (expected, actual, tracker) => {
+  const expectedNumeric = expected.getTime();
+  const actualNumeric = actual.getTime();
+
+  if (expectedNumeric === actualNumeric) {
+    return true;
+  } else {
+    tracker.message = `Expected "${expected}" but found "${actual}"`;
+    throw tracker;
+  }
 };
 
 const stackDisplay = arrayStack => {

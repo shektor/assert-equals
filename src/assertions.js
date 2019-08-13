@@ -104,9 +104,19 @@ const assertObjectEquality = (expectedArray, actualObject, tracker) => {
 
 const stackDisplay = arrayStack => {
   if (arrayStack.length > 0) {
-    arrayStack = `At ${arrayStack.join("")} `;
+    const formattedStack = [];
 
-    return arrayStack;
+    arrayStack.forEach((element, index) => {
+      if (index !== 0 && element[0] !== "[") {
+        formattedStack.push(`.${element}`);
+      } else {
+        formattedStack.push(element);
+      }
+    });
+
+    const stackMessage = `At ${formattedStack.join("")} `;
+
+    return stackMessage;
   } else {
     return "";
   }

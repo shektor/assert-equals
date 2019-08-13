@@ -109,6 +109,24 @@ const runAllSpecs = () => {
     failMessage
   );
 
+  specMessage = "Object key value pairs with objects as values equal";
+  assertEqualsShouldPassWith(
+    specMessage,
+    specResults,
+    { a: 1, b: 2, c: [1, 2, 3], d: { e: "f" } },
+    { a: 1, b: 2, c: [1, 2, 3], d: { e: "f" } }
+  );
+
+  specMessage = "Object key value pairs with objects as values not equal";
+  failMessage = 'At c[3].d Expected "f" but found "g"';
+  assertEqualsShouldFailWith(
+    specMessage,
+    specResults,
+    { a: 1, b: 2, c: [1, 2, 3, { d: "f" }] },
+    { a: 1, b: 2, c: [1, 2, 3, { d: "g" }] },
+    failMessage
+  );
+
   const specMessageEl = document.getElementById("specMessages");
 
   specResults.forEach(result => {

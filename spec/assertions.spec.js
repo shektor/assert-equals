@@ -36,7 +36,7 @@ const runAllSpecs = () => {
   assertEqualsShouldPassWith(specMessage, specResults, [2, 7, 8], [2, 7, 8]);
 
   specMessage = "Array elements not equal";
-  failMessage = 'Expected [2] "8" but found "3"';
+  failMessage = 'At [2] Expected "8" but found "3"';
   assertEqualsShouldFailWith(
     specMessage,
     specResults,
@@ -54,7 +54,7 @@ const runAllSpecs = () => {
   );
 
   specMessage = "2d Array not equal";
-  failMessage = 'Expected [1][1] "5" but found "4"';
+  failMessage = 'At [1][1] Expected "5" but found "4"';
   assertEqualsShouldFailWith(
     specMessage,
     specResults,

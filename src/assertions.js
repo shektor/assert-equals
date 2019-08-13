@@ -1,38 +1,42 @@
 const assertEquals = (message, expected, actual) => {
   try {
-    const stack = [];
-    assertDeepEquality(message, expected, actual, stack);
-  } catch (failure) {
-    throw failure;
+    const tracker = {
+      stack: [],
+      message: "Untested"
+    };
+    assertDeepEquality(expected, actual, tracker);
+  } catch (trackedFailure) {
+    const atElement = stackDisplay(trackedFailure.stack);
+    throw { message: `${message} - ${atElement}${trackedFailure.message}` };
   }
 
   return true;
 };
 
-const assertDeepEquality = (message, expected, actual, stack) => {
+const assertDeepEquality = (expected, actual, tracker) => {
   const expectedType = toStringCallTypeOf(expected);
   const actualType = toStringCallTypeOf(actual);
 
   try {
-    assertTypeEquality(message, expectedType, actualType);
+    assertTypeEquality(expectedType, actualType, tracker);
 
     switch (expectedType) {
       case "Array":
-        assertArrayLength(message, expected, actual);
-        assertArrayEquality(message, expected, actual, stack);
+        assertArrayLength(expected, actual, tracker);
+        assertArrayEquality(expected, actual, tracker);
         break;
       case "Object":
         const expectedArray = Object.entries(expected);
         const actualArray = Object.entries(actual);
 
-        assertArrayLength(message, expectedArray, actualArray);
-        assertObjectEquality(message, expectedArray, actual, stack);
+        assertArrayLength(expectedArray, actualArray, tracker);
+        assertObjectEquality(expectedArray, actual, tracker);
         break;
       default:
-        assertPrimitiveEquality(message, expected, actual, stack);
+        assertPrimitiveEquality(expected, actual, tracker);
     }
-  } catch (failure) {
-    throw failure;
+  } catch (trackedFailure) {
+    throw trackedFailure;
   }
 
   return true;
@@ -45,54 +49,48 @@ const toStringCallTypeOf = operand => {
   return type;
 };
 
-const assertTypeEquality = (message, expectedType, actualType) => {
+const assertTypeEquality = (expectedType, actualType, tracker) => {
   if (expectedType === actualType) {
     return true;
   } else {
-    throw {
-      message: `${message} Expected type ${expectedType} but found ${actualType}`
-    };
+    tracker.message = `Expected type ${expectedType} but found ${actualType}`;
+    throw tracker;
   }
 };
 
-const assertPrimitiveEquality = (message, expected, actual, stack) => {
+const assertPrimitiveEquality = (expected, actual, tracker) => {
   if (expected === actual) {
     return true;
   } else {
-    throw {
-      message: `${message} Expected ${stackDisplay(
-        stack
-      )}"${expected}" but found "${actual}"`
-    };
+    tracker.message = `Expected "${expected}" but found "${actual}"`;
+    throw tracker;
   }
 };
 
-const assertArrayLength = (message, expected, actual) => {
+const assertArrayLength = (expected, actual, tracker) => {
   if (expected.length === actual.length) {
     return true;
   } else {
-    throw {
-      message: `${message} Expected elements ${expected.length} but found ${actual.length}`
-    };
+    tracker.message = `Expected elements ${expected.length} but found ${actual.length}`;
+    throw tracker;
   }
 };
 
-const assertArrayEquality = (message, expected, actual, stack) => {
+const assertArrayEquality = (expected, actual, tracker) => {
   expected.forEach((element, index) => {
-    stack.push(`[${index}]`);
-    if (assertDeepEquality(message, expected[index], actual[index], stack)) {
-      stack.pop();
+    tracker.stack.push(`[${index}]`);
+    if (assertDeepEquality(expected[index], actual[index], tracker)) {
+      tracker.stack.pop();
     }
   });
   return true;
 };
 
-const assertObjectEquality = (message, expectedArray, actualObject, stack) => {
+const assertObjectEquality = (expectedArray, actualObject, tracker) => {
   expectedArray.forEach(([key, value]) => {
     if (actualObject[key] === undefined) {
-      throw {
-        message: `${message} Expected object key "${key}" but was not found`
-      };
+      tracker.message = `Expected object key "${key}" but was not found`;
+      throw tracker;
     }
   });
 
@@ -101,7 +99,7 @@ const assertObjectEquality = (message, expectedArray, actualObject, stack) => {
 
 const stackDisplay = arrayStack => {
   if (arrayStack.length > 0) {
-    arrayStack = `${arrayStack.join("")} `;
+    arrayStack = `At ${arrayStack.join("")} `;
 
     return arrayStack;
   } else {

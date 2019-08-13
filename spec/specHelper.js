@@ -37,7 +37,7 @@ const assertEqualsShouldFailWith = (
       `Expected "${expected}" and Actual "${actual}" did not throw exception`
     );
   } catch (failure) {
-    expectedFailure = `${specMessage} ${failMessage}`;
+    expectedFailure = `${specMessage} - ${failMessage}`;
 
     if (failure.message === expectedFailure) {
       resultArray.push(`PASS - ${specMessage}`);

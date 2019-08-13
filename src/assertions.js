@@ -16,11 +16,16 @@ const assertDeepEquality = (message, expected, actual, stack) => {
   try {
     assertTypeEquality(message, expectedType, actualType);
 
-    if (expectedType === "Array") {
-      assertArrayLength(message, expected, actual);
-      assertArrayEquality(message, expected, actual, stack);
-    } else {
-      assertPrimitiveEquality(message, expected, actual, stack);
+    switch (expectedType) {
+      case "Array":
+        assertArrayLength(message, expected, actual);
+        assertArrayEquality(message, expected, actual, stack);
+        break;
+      case "Object":
+        assertObjectEquality(message, expected, actual, stack);
+        break;
+      default:
+        assertPrimitiveEquality(message, expected, actual, stack);
     }
   } catch (failure) {
     throw failure;
@@ -75,6 +80,20 @@ const assertArrayEquality = (message, expected, actual, stack) => {
       stack.pop();
     }
   });
+  return true;
+};
+
+const assertObjectEquality = (message, expected, actual, stack) => {
+  const objectArray = Object.entries(expected);
+
+  objectArray.forEach(([key, value]) => {
+    if (actual[key] === undefined) {
+      throw {
+        message: `${message} Expected object key "${key}" but was not found`
+      };
+    }
+  });
+
   return true;
 };
 

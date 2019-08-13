@@ -63,6 +63,24 @@ const runAllSpecs = () => {
     failMessage
   );
 
+  specMessage = "Object key exists: ";
+  assertEqualsShouldPassWith(
+    specMessage,
+    specResults,
+    { a: 1, b: 2 },
+    { a: 1, b: 2 }
+  );
+
+  specMessage = "Object key does not exist: ";
+  failMessage = 'Expected object key "b" but was not found';
+  assertEqualsShouldFailWith(
+    specMessage,
+    specResults,
+    { a: 1, b: 2 },
+    { a: 1, c: 2 },
+    failMessage
+  );
+
   const specMessageEl = document.getElementById("specMessages");
 
   specResults.forEach(result => {

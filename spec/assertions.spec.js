@@ -173,6 +173,13 @@ const runAllSpecs = () => {
     failMessage
   );
 
+  specMessage = "NaN equal to self";
+  assertEqualsShouldPassWith(specMessage, specResults, NaN, NaN);
+
+  specMessage = "NaN not equal to a Number";
+  failMessage = 'Expected "NaN" but found "0"';
+  assertEqualsShouldFailWith(specMessage, specResults, NaN, 0, failMessage);
+
   const specMessageEl = document.getElementById("specMessages");
 
   specResults.forEach(result => {

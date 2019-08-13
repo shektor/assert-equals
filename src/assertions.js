@@ -64,10 +64,16 @@ const assertTypeEquality = (expectedType, actualType, tracker) => {
 const assertPrimitiveEquality = (expected, actual, tracker) => {
   if (expected === actual) {
     return true;
+  } else if (assertNaNEquality(expected, actual)) {
+    return true;
   } else {
     tracker.message = `Expected "${expected}" but found "${actual}"`;
     throw tracker;
   }
+};
+
+const assertNaNEquality = (expected, actual) => {
+  return expected !== expected && actual !== actual;
 };
 
 const assertArrayLength = (expected, actual, tracker) => {

@@ -88,9 +88,14 @@ const assertArrayEquality = (expected, actual, tracker) => {
 
 const assertObjectEquality = (expectedArray, actualObject, tracker) => {
   expectedArray.forEach(([key, value]) => {
-    if (actualObject[key] === undefined) {
-      tracker.message = `Expected object key "${key}" but was not found`;
+    tracker.stack.push(key);
+    actualValue = actualObject[key];
+
+    if (actualValue === undefined) {
+      tracker.message = `Expected object key in Actual but was not found`;
       throw tracker;
+    } else if (assertDeepEquality(value, actualValue, tracker)) {
+      tracker.stack.pop();
     }
   });
 

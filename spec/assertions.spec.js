@@ -72,7 +72,7 @@ const runAllSpecs = () => {
   );
 
   specMessage = "Object key does not exist";
-  failMessage = 'Expected object key "b" but was not found';
+  failMessage = 'At b Expected object key in Actual but was not found';
   assertEqualsShouldFailWith(
     specMessage,
     specResults,
@@ -88,6 +88,24 @@ const runAllSpecs = () => {
     specResults,
     { a: 1, b: 2 },
     { a: 1, c: 2, d: 5 },
+    failMessage
+  );
+
+  specMessage = "Object key value pairs equal";
+  assertEqualsShouldPassWith(
+    specMessage,
+    specResults,
+    { a: 1, b: 2 },
+    { a: 1, b: 2 }
+  );
+
+  specMessage = "Object key value pairs not equal";
+  failMessage = 'At c Expected "2" but found "3"';
+  assertEqualsShouldFailWith(
+    specMessage,
+    specResults,
+    { a: 1, c: 2 },
+    { a: 1, c: 3 },
     failMessage
   );
 

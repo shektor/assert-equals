@@ -9,6 +9,13 @@ const runAllSpecs = () => {
   failMessage = 'Expected "1" but found "2"';
   assertEqualsShouldFailWith(specMessage, specResults, 1, 2, failMessage);
 
+  specMessage = "String equal";
+  assertEqualsShouldPassWith(specMessage, specResults, "bob", "bob");
+
+  specMessage = "String not equal";
+  failMessage = 'Expected "bob" but found "sue"';
+  assertEqualsShouldFailWith(specMessage, specResults, 'bob', 'sue', failMessage);
+
   specMessage = "Array type and length equal";
   assertEqualsShouldPassWith(specMessage, specResults, [1, 1], [1, 1]);
 
@@ -126,6 +133,20 @@ const runAllSpecs = () => {
     { a: 1, b: 2, c: [1, 2, 3, { d: "g" }] },
     failMessage
   );
+
+  specMessage = "Null not equal to Object";
+  failMessage = "Expected type Null but found Object";
+  assertEqualsShouldFailWith(specMessage, specResults, null, {}, failMessage);
+
+  specMessage = "Null equal to self";
+  assertEqualsShouldPassWith(specMessage, specResults, null, null);
+
+  specMessage = "Boolean equal to self";
+  assertEqualsShouldPassWith(specMessage, specResults, false, false);
+
+  specMessage = "Boolean not equal to commen number coercion";
+  failMessage = "Expected type Boolean but found Number";
+  assertEqualsShouldFailWith(specMessage, specResults, false, 0, failMessage);
 
   const specMessageEl = document.getElementById("specMessages");
 
